@@ -1,0 +1,68 @@
+# liip_imagine:
+#    filter_sets:
+#
+#        # an example thumbnail transformation definition
+#        # https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html#create-thumbnails
+#        squared_thumbnail:
+#
+#            # set your image quality defaults
+#            jpeg_quality:          85
+#            png_compression_level: 8
+#
+#            # setup the filter steps to apply for this transformation
+#            filters:
+#
+#                # auto rotate the image using EXIF metadata
+#                auto_rotate: ~
+#
+#                # strip the image of all metadata
+#                strip: ~
+#
+#                # scale and square the image to the given dimensions
+#                thumbnail:
+#                    size:          [253, 253]
+#                    mode:          outbound
+#                    allow_upscale: true
+#
+#                # create border by placing image on larger black background
+#                background:
+#                    size:     [256, 256]
+#                    position: center
+#                    color:    '#fff'
+#
+#
+
+liip_imagine:
+    resolvers:
+       default:
+          web_path:
+              web_root: "%kernel.root_dir%/../public"
+              cache_prefix: "media/cache"
+    loaders:
+        default:
+            filesystem:
+                data_root: "%kernel.root_dir%/../public/"
+    cache:       default
+    data_loader: default
+    filter_sets:
+        cache: ~ 
+        admin_list_thumb:
+            quality: 100
+            filters:
+                auto_rotate: ~
+                thumbnail: { size: [64, 36], mode: outbound }
+        admin_list_avatar:
+            quality: 100
+            filters:
+                auto_rotate: ~
+                thumbnail: { size: [36, 36], mode: outbound }
+        admin_photo_list:
+            quality: 100
+            filters:
+                thumbnail: { size: [300, 300], mode: outbound }
+        wxapp_list:
+            quality: 100
+            filters:
+                thumbnail: { size: [240, 160], mode: outbound }
+
+

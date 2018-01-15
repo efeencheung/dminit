@@ -1,0 +1,13 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+    default_locale: zh_CN
+    #csrf_protection: ~
+    #http_method_override: true
+    #trusted_hosts: ~
+    # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+    session:
+        handler_id: ~
+    #esi: ~
+    #fragments: ~
+    php_errors:
+        log: true

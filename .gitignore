@@ -1,0 +1,18 @@
+
+###> symfony/framework-bundle ###
+.env
+.DS_Store
+tags
+*.swp
+/public/bundles/
+/public/media/cache/*
+!public/media/cache/.gitkeep
+/public/upload/image/*
+!public/upload/image/.gitkeep
+/public/upload/file/*
+!public/upload/file/.gitkeep
+/public/upload/audio/*
+!public/upload/audio/.gitkeep
+/var/
+/vendor/
+###< symfony/framework-bundle ###

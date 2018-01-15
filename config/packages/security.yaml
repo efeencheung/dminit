@@ -1,0 +1,35 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+    providers:
+        chain_provider:
+            chain:
+                providers: [default, weixin]
+        default:
+            entity: { class: App:User, property: username }
+        weixin: 
+            entity: { class: App:User, property: openId }
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            pattern: ^/
+            anonymous: ~
+            guard:
+                authenticators: 
+                    - 'App\Security\FormAuthenticator'
+                    - 'App\Security\WeixinAuthenticator'
+                entry_point: 'App\Security\FormAuthenticator'
+            access_denied_handler: 'App\Security\AccessDeniedHandler'
+            logout:
+                path:   /logout
+                target: /
+                success_handler: 'App\Security\LogoutSuccessHandler'
+    access_control:
+        - { path: ^/user/, roles: ROLE_ADMIN }
+        - { path: ^/article/, roles: ROLE_ADMIN, methods: [ POST, PUT, DELETE ] }
+        - { path: ^/tag/, roles: ROLE_ADMIN, methods: [ POST, PUT, DELETE ] }
+        - { path: ^/loggeduser, roles: ROLE_USER }
+        - { path: ^/wxuser, roles: ROLE_USER }

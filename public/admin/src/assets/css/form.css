@@ -1,0 +1,90 @@
+/* Select */
+select.form-control {
+    background-color: transparent;
+    background-image: url("../img/select_icon.png");
+    background-size: 20px;
+    background-position: right center;
+    background-repeat:no-repeat;
+    padding-right: 14px;
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+}
+
+select.form-control::-ms-expand { 
+    display: none; 
+}
+
+/* input file */
+input.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+input.inputfile + label {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    display: inline-block;
+    margin-bottom: 0;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857;
+    user-select: none;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: #286090;
+    border-color: #204d74;
+}
+
+img.inputfile-preview {
+    display: block;
+    width: 200px;
+    margin-bottom: 15px;
+}
+
+/* CheckBox */
+label.dm-checkbox {
+    margin: 0 20px 0 0;
+    font-size: 14px;
+    line-height: 14px;
+    display:inline-block;
+    vertical-align: middle;
+}
+
+input.dm-checkbox-input {
+    display:none;
+}
+
+span.dm-checkbox-span {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    margin-top: -1px;
+    vertical-align: middle;
+    line-height: 1
+}
+
+input.dm-checkbox-input:checked + span.dm-checkbox-span:after{
+    background-color:#32c5d2;
+    content:"";
+    display:inline-block;
+    width:12px;
+    height:12px;
+    margin:1px;
+}

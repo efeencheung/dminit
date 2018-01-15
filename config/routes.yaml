@@ -1,0 +1,8 @@
+controllers:
+    resource: ../src/Controller/
+    type: annotation
+logout:
+    path: /logout
+login:
+    path: /login
+

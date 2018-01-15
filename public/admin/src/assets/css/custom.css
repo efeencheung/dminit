@@ -1,0 +1,102 @@
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,"Microsoft Yahei","Hiragino Sans GB","Heiti SC","WenQuanYi Micro Hei",sans-serif;
+}
+
+.page-header.navbar .page-logo .text-logo {
+    padding-left: 0;
+    font-weight: 900;
+    font-size: 17px;
+}
+
+.page-sidebar .page-sidebar-menu {
+    padding-top: 20px;
+}
+
+.page-sidebar .page-sidebar-menu .sub-menu > li > a.router-link-active {
+    background: #EFEFEF !important;
+}
+
+input.upload-file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+input.upload-file + label {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    display: inline-block;
+    margin-bottom: 0;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    user-select: none;
+}
+
+.upload-file:focus + label,
+.upload-file + label:hover {
+    background-color: #286090;
+    border-color: #204d74;
+}
+
+/* 图像列表 */
+.picture-item {
+    padding: 15px;
+    position: relative;
+}
+
+img.picture-list {
+    width: 100%;
+    display: block;
+}
+
+.picture-actions {
+    width: 100%;
+    padding: 0 15px;
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    display: none;
+}
+
+.picture-item:hover .picture-actions {
+    display: block;
+}
+
+.vex-theme-picture .vex-content {
+    position: relative;
+    background: transparent;
+    top: 50%;
+    margin: -300px 15% 0;
+}
+
+.vex-theme-picture .vex-content img.preview {
+    margin: 0 auto;
+    display: block;
+    height: 600px;
+}
+
+.vex-theme-form .vex-content {
+    background: #ffffff;
+    position: relative;
+    margin: 160px 0 0 -250px; 
+    left: 50%;
+    width: 500px;
+}
+
+.vex-theme-form .vex-content img.preview {
+    margin: 0 auto;
+    display: block;
+    height: 600px;
+}
