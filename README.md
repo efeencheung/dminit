@@ -18,7 +18,7 @@
 
 ```sh
 cd dminit
-composer install
+composer install //安装到最后询问选p
 
 cd public/admin
 npm install
@@ -29,9 +29,11 @@ npm install
 npm run build //生产模式
 OR
 npm run watch //开发模式
+
+cd ../../
 ```
 
-五. 复制.env.dist到.env配置数据库连接信息，然后创建数据库，数据表
+五. 打开.env配置数据库连接信息，然后创建数据库，数据表
 
 ```sh
 php bin/console doctrine:database:create

@@ -28,8 +28,8 @@ security:
                 target: /
                 success_handler: 'App\Security\LogoutSuccessHandler'
     access_control:
-        # - { path: ^/loggeduser, roles: ROLE_USER }
-        # - { path: ^/wxuser, roles: ROLE_USER }
-        # - { path: ^/user/, roles: ROLE_ADMIN }
-        # - { path: ^/article/, roles: ROLE_ADMIN, methods: [ POST, PUT, DELETE ] }
-        # - { path: ^/tag/, roles: ROLE_ADMIN, methods: [ POST, PUT, DELETE ] }
+        - { path: ^/loggeduser, roles: [ ROLE_USER, ROLE_ADMIN ] }
+        - { path: ^/wxuser, roles: [ ROLE_USER, ROLE_ADMIN ] }
+        - { path: ^/user/, roles: ROLE_ADMIN }
+        - { path: ^/article/, roles: ROLE_ADMIN, methods: [ POST, PUT, DELETE ] }
+        - { path: ^/tag/, roles: ROLE_ADMIN, methods: [ POST, PUT, DELETE ] }
