@@ -14,7 +14,7 @@
 
 二. 下载代码 git clone git@github.com:efeencheung/dminit.git
 
-三. 安装依赖包，如果在安装过程中没有正确的配置数据库信息，需手动编辑app/config/parameters.yml
+三. 安装依赖包
 
 ```sh
 cd dminit
