@@ -56,6 +56,9 @@ export default {
     mounted: function() {
         this.$http.get('/loggeduser').then(response=>{
             let user = response.body.data
+            if (user === null) {
+                user = {}
+            }
             this.$store.commit('login', user)
         }, response=>{})
     },
@@ -64,10 +67,8 @@ export default {
             this.$Progress.start()
             this.$http.get('/logout').then(response => {
                 this.$Progress.finish()
-                //this.checkLogin()
             }, response => {
                 this.$Progress.finish()
-                //this.checkLogin()
             })
         }
     },

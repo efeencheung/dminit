@@ -18,7 +18,6 @@ import UserList from '../components/user/UserList.vue'
 import VideoAdd from '../components/content/VideoAdd.vue'
 import VideoEdit from '../components/content/VideoEdit.vue'
 import VideoList from '../components/content/VideoList.vue'
-import ProductCategoryAdd from '../components/product/ProductCategoryAdd.vue'
 
 Vue.use(Router)
 
@@ -108,11 +107,6 @@ export default new Router({
             path: '/video/list',
             name: 'VideoList',
             component: VideoList
-        },
-        {
-            path: '/productcategory/add',
-            name: 'ProductCategoryAdd',
-            component: ProductCategoryAdd
         }
     ]
 })

@@ -96,9 +96,7 @@
                                             用户头像 <span class="required"> * </span>
                                         </label>
                                         <div class="col-md-5">
-                                            <img id="img-compressed" src="../../assets/img/default-image.jpg" style="display:none;" class="inputfile-preview"/>
-                                            <input type="file" name="file" id="file-1" class="inputfile" accept="image/*" />
-                                            <label for="file-1" class="">选择图片</label>
+                                            <image-input name="entity[avatar]"></image-input>
                                         </div>
                                         <div class="col-md-5">
                                             <span class="help-block" style="margin-top: 7px;"></span>
@@ -123,11 +121,14 @@
 
 <script>
 import '../../assets/css/form.css'
-import ImageFileInput from '../../assets/js/imagefileinput'
+import ImageInput from '../../components/form/ImageInput.vue'
 import dataUrlToBlob from '../../assets/js/dataurltoblob'
 
 export default {
     name: 'useradd',
+    components: {
+        'image-input': ImageInput
+    },
     data: function(){
         return {
             entity: {},
@@ -138,7 +139,6 @@ export default {
         }
     },
     mounted: function() {
-        let fileinput = new ImageFileInput('#file-1', 960)
     },
     methods: {
         submit: function(e) {
@@ -146,7 +146,9 @@ export default {
             let action = form.getAttribute('action')
             let data = new FormData(form)
             let submitBtn = form.querySelector('button[type=submit]');
-            data.set('file', dataUrlToBlob(document.getElementById('img-compressed').src))
+            if (data.get('entity[avatar]').size > 0) {
+                data.set('entity[avatar]', dataUrlToBlob(form.querySelector('.picture-preview').src))
+            }
             this.$http.post('/user/create', data, {
                 before: function(){
                     this.$Progress.start()

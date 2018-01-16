@@ -80,7 +80,7 @@ class ArticleController extends Controller
         $query = $qb->getQuery();
         $entities = $query->getResult();
 
-        $entityData = array();
+        $entityData = [];
         $serializer = $this->get('serializer');
         foreach ($entities as $entity) {
             $entityDataItem = $serializer->normalize($entity, 'array');
@@ -93,7 +93,7 @@ class ArticleController extends Controller
             $entityData[] = $entityDataItem;
         }
 
-        return new JsonResponse(array('entities'=>$entityData, 'pageCount'=>$count));
+        return new JsonResponse(['entities'=>$entityData, 'pageCount'=>$count]);
     }
 
     /**
@@ -115,11 +115,11 @@ class ArticleController extends Controller
         $validator = $this->get('validator');
         $errors = $validator->validate($entity);
         if (count($errors) > 0) {
-            return new JsonResponse(array(
+            return new JsonResponse([
                 '_status'=>'failed', 
                 '_msg'=>$errors[0]->getMessage(), 
                 '_field'=>$errors[0]->getPropertyPath()
-            ), 400);
+            ], 400);
         }
 
         /* 处理图文内容中的图片 */
@@ -129,7 +129,7 @@ class ArticleController extends Controller
         $em->persist($entity);
         $em->flush();
 
-        return new JsonResponse(array('_status'=>'success', '_msg'=>'资讯添加成功'));
+        return new JsonResponse(['_status'=>'success', '_msg'=>'资讯添加成功']);
     }
 
     /**
@@ -150,11 +150,11 @@ class ArticleController extends Controller
         $validator = $this->get('validator');
         $errors = $validator->validate($entity);
         if (count($errors) > 0) {
-            return new JsonResponse(array(
+            return new JsonResponse([
                 '_status'=>'failed', 
                 '_msg'=>$errors[0]->getMessage(), 
                 '_field'=>$errors[0]->getPropertyPath()
-            ), 400);
+            ], 400);
         }
 
         /* 处理图文内容中的图片 */
@@ -164,7 +164,7 @@ class ArticleController extends Controller
         $em->persist($entity);
         $em->flush();
 
-        return new JsonResponse(array('_status'=>'success', '_msg'=>'资讯信息修改成功'));
+        return new JsonResponse(['_status'=>'success', '_msg'=>'资讯信息修改成功']);
     }
 
     /**
@@ -177,14 +177,14 @@ class ArticleController extends Controller
     {
         $serializer = $this->get('serializer');
         $entityData = $serializer->normalize($entity, 'array');
-        $tags = array();
+        $tags = [];
         foreach ($entityData['tags'] as $tag) {
             $tags[] = (string) $tag['id'];
         }
         $entityData['tags'] = $tags;
         $entityData['publishedAt'] = $entity->getPublishedAt()->format("Y-m-d H:i:s");
 
-        return new JsonResponse(array('_status'=>'success', 'data'=>$entityData));
+        return new JsonResponse(['_status'=>'success', 'data'=>$entityData]);
     }
 
 
@@ -200,7 +200,7 @@ class ArticleController extends Controller
         $em->remove($entity);
         $em->flush();
 
-        return new JsonResponse(array('_status'=>'success', '_msg'=>'资讯删除成功'));
+        return new JsonResponse(['_status'=>'success', '_msg'=>'资讯删除成功']);
     }
 
     /**
@@ -219,11 +219,11 @@ class ArticleController extends Controller
         $validator = $this->get('validator');
         $errors = $validator->validate($picture);
         if (count($errors) > 0) {
-            return new JsonResponse(array(
+            return new JsonResponse([
                 '_status'=>'fail', 
                 '_msg'=>$errors[0]->getMessage(), 
                 '_field'=>$errors[0]->getPropertyPath()
-            ), 400);
+            ], 400);
         }
         /* 保存并上传图片 */
         $em = $this->getDoctrine()->getManager();
@@ -234,7 +234,7 @@ class ArticleController extends Controller
         $em->persist($entity);
         $em->flush();
 
-        return new JsonResponse(array('_status'=>'success', '_msg'=>'图片上传成功'));
+        return new JsonResponse(['_status'=>'success', '_msg'=>'图片上传成功']);
     }
 
     /**
@@ -247,14 +247,14 @@ class ArticleController extends Controller
     {
         $photos = $entity->getPictures();
 
-        $photoData = array();
+        $photoData = [];
         $serializer = $this->get('serializer');
         foreach ($photos as $photo) {
             $photoDataItem = $serializer->normalize($photo, 'array');
             $photoData[] = $photoDataItem;
         }
 
-        return new JsonResponse(array('_status'=>'success', 'photos'=>$photoData));
+        return new JsonResponse(['_status'=>'success', 'photos'=>$photoData]);
     }
 
     /**
@@ -272,6 +272,6 @@ class ArticleController extends Controller
         $em->persist($entity);
         $em->flush();
 
-        return new JsonResponse(array('_status'=>'success', '_msg'=>'图片删除成功'));
+        return new JsonResponse(['_status'=>'success', '_msg'=>'图片删除成功']);
     }
 }

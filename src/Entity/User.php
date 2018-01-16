@@ -15,6 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table()
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity("username", message="用户名已存在", groups={"create"})
  */
 class User implements UserInterface, \Serializable
@@ -217,13 +218,14 @@ class User implements UserInterface, \Serializable
     /**
      * Set role
      *
-     * @param integer $role
+     * @param array $role
      *
      * @return User
      */
     public function setRole($role)
     {
-        $this->role = $role;
+
+        $this->role = json_encode($role);
 
         return $this;
     }
@@ -231,11 +233,11 @@ class User implements UserInterface, \Serializable
     /**
      * Get role
      *
-     * @return int
+     * @return array
      */
     public function getRole()
     {
-        return $this->role;
+        return json_decode($this->role, true);
     }
 
     /**

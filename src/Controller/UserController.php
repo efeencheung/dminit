@@ -60,14 +60,14 @@ class UserController extends Controller
         $query = $qb->getQuery();
         $entities = $query->getResult();
 
-        $entityData = array();
+        $entityData = [];
         $serializer = $this->get('serializer');
         foreach ($entities as $entity) {
-            $entityDataItem = $serializer->normalize($entity, 'array', array('groups'=>array('list')));
+            $entityDataItem = $serializer->normalize($entity, 'array', ['groups' => ['list']]);
             $entityData[] = $entityDataItem;
         }
 
-        return new JsonResponse(array('entities'=>$entityData, 'pageCount'=>$count));
+        return new JsonResponse(['entities'=>$entityData, 'pageCount'=>$count]);
     }
 
     /**
@@ -78,60 +78,31 @@ class UserController extends Controller
      */
     public function createAction(Request $request)
     {
+        $entity = new User();
         $entityData = $request->request->get('entity');
+        $attachmentData = $request->files->get('entity');
 
         /* 验证两次输入密码是否一致 */
         $confirmPassword = $request->request->get('confirm_password');
         if ($confirmPassword != $entityData['password']) {
-            return new JsonResponse(array(
+            return new JsonResponse([
                 '_status'=>'fail', 
                 '_msg'=>'两次密码输入不一致'
-            ), 400);
+            ], 400);
         }
 
-        /* 执行图片上传 */
-        $file = $request->files->get('file');
-        $picture = new Picture();
-        $picture->setFile($file);
-        /* 验证图片格式的合法性 */
-        $validator = $this->get('validator');
-        $errors = $validator->validate($picture);
-        if (count($errors) > 0) {
-            return new JsonResponse(array(
-                '_status'=>'fail', 
-                '_msg'=>$errors[0]->getMessage(), 
-                '_field'=>$errors[0]->getPropertyPath()
-            ), 400);
-        }
-        /* 保存并上传图片 */
         $em = $this->getDoctrine()->getManager();
-        $em->persist($picture);
-        $em->flush();
-        $entity = new User();
-        $entity->setAvatar($picture);
-
-        foreach ($entityData as $key => $value) {
-            if (!is_array($value)) {
-                call_user_func(array($entity, 'set'.ucfirst($key)), $value);
-            } 
-        }
-
-        /* 设置角色 */
-        if ( isset($entityData['role']) && is_array($entityData['role'])) {
-            $entity->setRole(json_encode($entityData['role']));
-        } else {
-            return new JsonResponse(array('_status'=>'fail', '_msg'=>'至少选择一个角色'), 400);
-        }
-
+        $em->getRepository('App:User')->bind($entity, $entityData);
+        $em->getRepository('App:User')->bindAttachment($entity, $attachmentData);
 
         $validator = $this->get('validator');
-        $errors = $validator->validate($entity, null, array('create'));
+        $errors = $validator->validate($entity, null, ['create']);
         if (count($errors) > 0) {
-            return new JsonResponse(array(
+            return new JsonResponse([
                 '_status'=>'failed', 
                 '_msg'=>$errors[0]->getMessage(), 
                 '_field'=>$errors[0]->getPropertyPath()
-            ), 400);
+            ], 400);
         }
 
         $encoder = $this->container->get('security.password_encoder');
@@ -141,7 +112,7 @@ class UserController extends Controller
         $em->persist($entity);
         $em->flush();
 
-        return new JsonResponse(array('_status'=>'success', '_msg'=>'用户添加成功'));
+        return new JsonResponse(['_status'=>'success', '_msg'=>'用户添加成功']);
     }
 
     /**
@@ -154,6 +125,7 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $entityData = $request->request->get('entity');
+        $attachmentData = $request->files->get('entity');
 
         if (isset($entityData['password']) && $entityData['password']) {
             /* 验证两次输入密码是否一致 */
@@ -168,48 +140,17 @@ class UserController extends Controller
             unset($entityData['password']);
         }
 
-        /* 如果提交图片，则执行图片上传 */
-        $file = $request->files->get('file');
-        if ($file) {
-            $picture = new Picture();
-            $picture->setFile($file);
-            /* 验证图片格式的合法性 */
-            $validator = $this->get('validator');
-            $errors = $validator->validate($picture);
-            if (count($errors) > 0) {
-                return new JsonResponse(array(
-                    '_status'=>'fail', 
-                    '_msg'=>$errors[0]->getMessage(), 
-                    '_field'=>$errors[0]->getPropertyPath()
-                ), 400);
-            }
-            /* 保存并上传图片 */
-            $em->persist($picture);
-            $em->flush();
-
-            $entity->setAvatar($picture);
-        }
-
-        foreach ($entityData as $key => $value) {
-            if (!is_array($value)) {
-                call_user_func(array($entity, 'set'.ucfirst($key)), $value);
-            } 
-        }
-        /* 设置角色 */
-        if ( isset($entityData['role']) && is_array($entityData['role'])) {
-            $entity->setRole(json_encode($entityData['role']));
-        } else {
-            return new JsonResponse(array('_status'=>'fail', '_msg'=>'至少选择一个角色'), 400);
-        }
+        $em->getRepository('App:User')->bind($entity, $entityData);
+        $em->getRepository('App:User')->bindAttachment($entity, $attachmentData);
 
         $validator = $this->get('validator');
         $errors = $validator->validate($entity, null, ['edit']);
         if (count($errors) > 0) {
-            return new JsonResponse(array(
+            return new JsonResponse([
                 '_status'=>'failed', 
                 '_msg'=>$errors[0]->getMessage(), 
                 '_field'=>$errors[0]->getPropertyPath()
-            ), 400);
+            ], 400);
         }
 
         if (isset($entityData['password']) && $entityData['password']) {
@@ -221,7 +162,7 @@ class UserController extends Controller
         $em->persist($entity);
         $em->flush();
 
-        return new JsonResponse(array('_status'=>'success', '_msg'=>'用户信息修改成功'));
+        return new JsonResponse(['_status'=>'success', '_msg'=>'用户信息修改成功']);
     }
 
     /**
@@ -235,7 +176,7 @@ class UserController extends Controller
         $serializer = $this->get('serializer');
         $entityData = $serializer->normalize($entity, 'array', ['groups'=>['list']]);
 
-        return new JsonResponse(array('_status'=>'success', 'data'=>$entityData));
+        return new JsonResponse(['_status'=>'success', 'data'=>$entityData]);
     }
 
 
@@ -251,6 +192,6 @@ class UserController extends Controller
         $em->remove($entity);
         $em->flush();
 
-        return new JsonResponse(array('_status'=>'success', '_msg'=>'用户删除成功'));
+        return new JsonResponse(['_status'=>'success', '_msg'=>'用户删除成功']);
     }
 }

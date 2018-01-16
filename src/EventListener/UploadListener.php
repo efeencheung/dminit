@@ -2,7 +2,7 @@
 
 namespace App\EventListener;
 
-use App\Entity\UploadAbleInterface;
+use App\Concept\UploadAbleInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;

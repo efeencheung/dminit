@@ -36,7 +36,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <router-link to="/video/add" class="btn btn-sm green">添加新用户</router-link>
+                                    <router-link to="/user/add" class="btn btn-sm green">添加新用户</router-link>
                                 </form>
                             </div>
                         </div>
