@@ -18,7 +18,7 @@
 
 ```sh
 cd dminit
-composer install //安装到最后询问选p
+composer install //安装到最后如果询问选p
 
 cd public/admin
 npm install
